@@ -1,12 +1,833 @@
-﻿<Window x:Class="PortfolioManager.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PortfolioManager"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+﻿<Controls:MetroWindow xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:local="clr-namespace:PortfolioManager"
+                      xmlns:oxy="http://oxyplot.org/wpf"
+                      xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+                      x:Class="PortfolioManager.MainWindow"
+                      mc:Ignorable="d"
+                      Title="Portfolio Manager"
+                      Height="600"
+                      Width="800"
+                      BorderThickness="0"
+                      GlowBrush="Black"
+                      ResizeMode="CanResizeWithGrip"
+                      WindowTransitionsEnabled="False"
+                      WindowStartupLocation="CenterScreen">
     <Grid>
-        
+        <DockPanel x:Name="header"
+                   Height="36"
+                   VerticalAlignment="Top"
+                   Margin="0,0,0.333,0">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="210*" />
+                    <ColumnDefinition Width="400*" />
+                    <ColumnDefinition Width="170*" />
+                </Grid.ColumnDefinitions>
+
+                <DockPanel Grid.Column="0">
+                    <TextBlock x:Name="tbDashboard"
+                       Height="auto"
+                       Text="STARK CAPITAL"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Stretch"
+                       DockPanel.Dock="Right"
+                       Margin="5,0,2,0"
+                       Width="auto"
+                       FontSize="18"
+                       FontWeight="Bold"/>
+                </DockPanel>
+                <DockPanel Grid.Column="2">
+                    <Label Height="auto"
+                           Content="Time: "
+                           FontSize="18"
+                           FontWeight="Bold"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left" />
+                    <Label x:Name="currentTime"
+                           Height="auto"
+                           FontSize="18"
+                           FontWeight="Bold"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Right" />
+                </DockPanel>
+            </Grid>
+        </DockPanel>
+
+        <DockPanel x:Name="body"
+                   Height="Auto"
+                   Margin="0,41,0.333,-0.333"
+                   VerticalAlignment="Stretch">
+            <Controls:MetroAnimatedSingleRowTabControl x:Name="tabbedControls">
+                <!--Price Calculator Code Starts from her-->
+                <TabItem Header="Price Calulator"
+                         Controls:ControlsHelper.HeaderFontSize="19">
+                    <Grid Margin="0,15,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="240*" />
+                            <RowDefinition Height="60*" />
+                        </Grid.RowDefinitions>
+                        <DockPanel x:Name="inputcontrols"
+                                   Grid.Row="0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="220*" />
+                                    <ColumnDefinition Width="150" />
+                                </Grid.ColumnDefinitions>
+                                <DockPanel Grid.Column="0">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="30" />
+                                            <RowDefinition Height="200*" />
+                                        </Grid.RowDefinitions>
+                                        <DockPanel Grid.Row="0">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="220*" />
+                                                    <ColumnDefinition Width="220*" />
+                                                    <ColumnDefinition Width="220*" />
+                                                </Grid.ColumnDefinitions>
+                                                <DockPanel Grid.Column="0">
+                                                    <Label Margin="2,0,0,0"
+                                                           Content="Select type of Option: "
+                                                           FontSize="14" />
+                                                </DockPanel>
+                                                <DockPanel Grid.Column="1">
+                                                    <ComboBox x:Name="optionKinds"
+                                                              HorizontalAlignment="Stretch"
+                                                              VerticalAlignment="Stretch"
+                                                              Margin="2,2,15,2"
+                                                              SelectionChanged="optionKinds_SelectionChanged">
+                                                        <ComboBoxItem Name="asian">Asian Option</ComboBoxItem>
+                                                        <ComboBoxItem Name="barrier">Barrier Option</ComboBoxItem>
+                                                        <ComboBoxItem Name="digital">Digital Option</ComboBoxItem>
+                                                        <ComboBoxItem Name="european"
+                                                                      IsSelected="True">European Option</ComboBoxItem>
+                                                        <ComboBoxItem Name="lookback">Lookback Option</ComboBoxItem>
+                                                        <ComboBoxItem Name="range">Range Option</ComboBoxItem>
+                                                    </ComboBox>
+                                                </DockPanel>
+                                                <DockPanel Grid.Column="2"
+                                                           Visibility="Hidden"
+                                                           x:Name="dpBarrierOptionType">
+                                                    <ComboBox x:Name="barrierOptionType"
+                                                              HorizontalAlignment="Stretch"
+                                                              VerticalAlignment="Stretch"
+                                                              Margin="10,2,15,2"
+                                                              SelectionChanged="barrierOptionType_SelectionChanged">
+                                                        <ComboBoxItem Name="downout"
+                                                                      IsSelected="True">Down and Out</ComboBoxItem>
+                                                        <ComboBoxItem Name="downin">Down and In</ComboBoxItem>
+                                                        <ComboBoxItem Name="upout">Up and Out</ComboBoxItem>
+                                                        <ComboBoxItem Name="upin">Up and In</ComboBoxItem>
+                                                    </ComboBox>
+                                                </DockPanel>
+                                            </Grid>
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="1">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <DockPanel Grid.Column="0">
+                                                    <Grid>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="50*" />
+                                                            <RowDefinition Height="50*" />
+                                                            <RowDefinition Height="50*" />
+                                                            <RowDefinition Height="50*" />
+                                                            <RowDefinition Height="50*" />
+                                                            <RowDefinition Height="70*" />
+                                                            <RowDefinition Height="30*" />
+                                                        </Grid.RowDefinitions>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="120*" />
+                                                            <ColumnDefinition Width="160*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <DockPanel Grid.Row="1"
+                                                                   Grid.Column="0">
+                                                            <Label x:Name="currentPrice"
+                                                                   Margin="10,0,0,0"
+                                                                   Content="Current Price: "
+                                                                   Height="51.3333333333333"
+                                                                   VerticalAlignment="Top" />
+                                                        </DockPanel>
+                                                        <DockPanel Grid.Row="2"
+                                                                   Grid.Column="0">
+                                                            <Label x:Name="optionType"
+                                                                   Margin="10,0,0,0"
+                                                                   Content="Option Type: "
+                                                                   Height="51.3333333333333"
+                                                                   VerticalAlignment="Top" />
+                                                        </DockPanel>
+                                                        <DockPanel Grid.Row="3"
+                                                                   Grid.Column="0">
+                                                            <Label x:Name="interestRate"
+                                                                   Margin="10,0,0,0"
+                                                                   Content="Interest Rate(in %): "
+                                                                   Height="50.6666666666667"
+                                                                   VerticalAlignment="Top" />
+                                                        </DockPanel>
+                                                        <DockPanel Grid.Row="4"
+                                                                   Grid.Column="0">
+                                                            <Label x:Name="numberOfScenarios"
+                                                                   Margin="10,0,0,0"
+                                                                   Content="Number of Scenarios: "
+                                                                   Height="50.6666666666667"
+                                                                   VerticalAlignment="Top" />
+                                                        </DockPanel>
+                                                        <DockPanel Grid.Row="1"
+                                                                   Grid.Column="1">
+                                                            <TextBox x:Name="tvCurrentPrice"
+                                                                     Margin="0,0,15,0"
+                                                                     Controls:TextBoxHelper.ClearTextButton="True"
+                                                                     Height="auto"
+                                                                     TextWrapping="Wrap"
+                                                                     VerticalAlignment="Top"
+                                                                     Width="auto"
+                                                                     TextChanged="tvCurrentPrice_TextChanged" />
+                                                        </DockPanel>
+                                                        <DockPanel Grid.Row="2"
+                                                                   Grid.Column="1">
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition />
+                                                                    <ColumnDefinition />
+                                                                </Grid.ColumnDefinitions>
+                                                                <DockPanel Grid.Column="0">
+                                                                    <RadioButton x:Name="call"
+                                                                                 Content="CALL"
+                                                                                 GroupName="gnOptionType"
+                                                                                 Height="auto"
+                                                                                 VerticalAlignment="Top"
+                                                                                 Click="call_Click" />
+                                                                </DockPanel>
+                                                                <DockPanel Grid.Column="1">
+                                                                    <RadioButton x:Name="put"
+                                                                                 Content="PUT"
+                                                                                 GroupName="gnOptionType"
+                                                                                 Height="auto"
+                                                                                 VerticalAlignment="Top"
+                                                                                 Click="put_Click" />
+                                                                </DockPanel>
+                                                            </Grid>
+                                                        </DockPanel>
+                                                        <DockPanel Grid.Row="3"
+                                                                   Grid.Column="1">
+                                                            <TextBox x:Name="tbInterestRate"
+                                                                     Margin="0,0,15,0"
+                                                                     Controls:TextBoxHelper.ClearTextButton="True"
+                                                                     Height="auto"
+                                                                     TextWrapping="Wrap"
+                                                                     VerticalAlignment="Top"
+                                                                     Width="auto"
+                                                                     TextChanged="tbInterestRate_TextChanged" />
+                                                        </DockPanel>
+                                                        <DockPanel Grid.Row="4"
+                                                                   Grid.Column="1">
+
+                                                            <TextBox x:Name="tbnumberOfScenarios"
+                                                                     Margin="0,0,15,0"
+                                                                     Controls:TextBoxHelper.ClearTextButton="True"
+                                                                     Height="auto"
+                                                                     TextWrapping="Wrap"
+                                                                     VerticalAlignment="Top"
+                                                                     Width="auto"
+                                                                     TextChanged="tbnumberOfScenarios_TextChanged" />
+                                                        </DockPanel>
+                                                        <DockPanel Grid.Row="5"
+                                                                   Grid.Column="0">
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="20*" />
+                                                                    <ColumnDefinition Width="120*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <DockPanel Grid.Column="1">
+                                                                    <Controls:ToggleSwitch x:Name="antitheticReduction"
+                                                                                           Header="Antithetic Reduction"
+                                                                                           Controls:ControlsHelper.HeaderFontSize="12"
+                                                                                           Height="auto"
+                                                                                           Margin="0,10,0,0"
+                                                                                           VerticalAlignment="Top"
+                                                                                           Click="antitheticReduction_Click" />
+                                                                </DockPanel>
+                                                            </Grid>
+                                                        </DockPanel>
+                                                        <DockPanel Grid.Row="5"
+                                                                   Grid.Column="1">
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="35*" />
+                                                                    <ColumnDefinition Width="60*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <DockPanel Grid.Column="1">
+                                                                    <Controls:ToggleSwitch x:Name="cbcontrolVariate"
+                                                                                           Header="Control Variate"
+                                                                                           Height="auto"
+                                                                                           Margin="0,10,0,0"
+                                                                                           Width="auto"
+                                                                                           VerticalAlignment="Top"
+                                                                                           Controls:ControlsHelper.HeaderFontSize="12"
+                                                                                           Click="cbcontrolVariate_Click" />
+                                                                </DockPanel>
+                                                            </Grid>
+                                                        </DockPanel>
+
+                                                    </Grid>
+                                                </DockPanel>
+                                                <DockPanel Grid.Column="1">
+                                                    <Grid>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="50*" />
+                                                            <RowDefinition Height="50*" />
+                                                            <RowDefinition Height="50*" />
+                                                            <RowDefinition Height="50*" />
+                                                            <RowDefinition Height="50*" />
+                                                            <RowDefinition Height="70*" />
+                                                            <RowDefinition Height="30*" />
+                                                        </Grid.RowDefinitions>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="120*" />
+                                                            <ColumnDefinition Width="160*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <DockPanel x:Name="extra"
+                                                                   Visibility="Hidden"
+                                                                   Grid.Row="0"
+                                                                   Grid.Column="1">
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="1*" />
+                                                                    <ColumnDefinition Width="2*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <DockPanel Grid.Column="0">
+                                                                    <Label x:Name="lrebate"
+                                                                           Content="Rebate: "
+                                                                           Height="auto"
+                                                                           VerticalAlignment="Center" />
+                                                                </DockPanel>
+                                                                <DockPanel Grid.Column="1">
+                                                                    <TextBox x:Name="tbRebate"
+                                                                             Margin="0,0,15,0"
+                                                                             Controls:TextBoxHelper.ClearTextButton="True"
+                                                                             Height="auto"
+                                                                             TextWrapping="Wrap"
+                                                                             VerticalAlignment="Center"
+                                                                             Width="auto"
+                                                                             TextChanged="tbRebate_TextChanged" />
+                                                                </DockPanel>
+                                                            </Grid>
+                                                        </DockPanel>
+                                                        <DockPanel Grid.Row="1"
+                                                                   Grid.Column="0">
+                                                            <Label x:Name="strikePrice"
+                                                                   Content="Strike Price: "
+                                                                   Height="51.3333333333333"
+                                                                   VerticalAlignment="Top" />
+                                                        </DockPanel>
+                                                        <DockPanel Grid.Row="2"
+                                                                   Grid.Column="0">
+                                                            <Label x:Name="maturity"
+                                                                   Content="Maturity Date: "
+                                                                   Height="51.3333333333333"
+                                                                   VerticalAlignment="Top" />
+                                                        </DockPanel>
+                                                        <DockPanel Grid.Row="3"
+                                                                   Grid.Column="0">
+                                                            <Label x:Name="volatility"
+                                                                   Content="Volatility(in %): "
+                                                                   Height="51.3333333333333"
+                                                                   VerticalAlignment="Top" />
+                                                        </DockPanel>
+                                                        <DockPanel Grid.Row="4"
+                                                                   Grid.Column="0">
+                                                            <Label x:Name="numberOfSimulations"
+                                                                   Content="Number Of Simulations: "
+                                                                   Height="51.3333333333333"
+                                                                   VerticalAlignment="Top" />
+                                                        </DockPanel>
+                                                        <DockPanel Grid.Row="1"
+                                                                   Grid.Column="1">
+                                                            <TextBox x:Name="tbStrikePrice"
+                                                                     Margin="0,0,15,0"
+                                                                     Controls:TextBoxHelper.ClearTextButton="True"
+                                                                     Height="auto"
+                                                                     TextWrapping="Wrap"
+                                                                     VerticalAlignment="Top"
+                                                                     Width="auto"
+                                                                     TextChanged="tbStrikePrice_TextChanged" />
+                                                        </DockPanel>
+                                                        <DockPanel Grid.Row="2"
+                                                                   Grid.Column="1">
+                                                            <Controls:DateTimePicker x:Name="dtMaturityDate"
+                                                                                     Margin="0,0,15,0"
+                                                                                     Height="auto"
+                                                                                     VerticalAlignment="Top"
+                                                                                     SelectedDateChanged="dtMaturityDate_SelectedDateChanged" />
+                                                        </DockPanel>
+                                                        <DockPanel Grid.Row="3"
+                                                                   Grid.Column="1">
+                                                            <TextBox x:Name="tbVolatility"
+                                                                     Margin="0,0,15,0"
+                                                                     Controls:TextBoxHelper.ClearTextButton="True"
+                                                                     Height="auto"
+                                                                     TextWrapping="Wrap"
+                                                                     VerticalAlignment="Top"
+                                                                     Width="auto"
+                                                                     TextChanged="tbVolatility_TextChanged" />
+                                                        </DockPanel>
+                                                        <DockPanel Grid.Row="4"
+                                                                   Grid.Column="1">
+                                                            <TextBox x:Name="tbNumberOfSimulations"
+                                                                     Margin="0,0,15,0"
+                                                                     Controls:TextBoxHelper.ClearTextButton="True"
+                                                                     Height="auto"
+                                                                     TextWrapping="Wrap"
+                                                                     VerticalAlignment="Top"
+                                                                     Width="auto"
+                                                                     TextChanged="tbNumberOfSimulations_TextChanged" />
+                                                        </DockPanel>
+                                                        <DockPanel Grid.Row="5"
+                                                                   Grid.Column="0">
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="35*" />
+                                                                    <ColumnDefinition Width="100*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <DockPanel Grid.Column="1">
+                                                                    <Controls:ToggleSwitch x:Name="multithreading"
+                                                                                           Header="Multithreading"
+                                                                                           Height="auto"
+                                                                                           Margin="0,10,0,0"
+                                                                                           VerticalAlignment="Top"
+                                                                                           Controls:ControlsHelper.HeaderFontSize="12"
+                                                                                           Click="multithreading_Click" />
+                                                                </DockPanel>
+                                                            </Grid>
+                                                        </DockPanel>
+                                                    </Grid>
+                                                </DockPanel>
+                                            </Grid>
+                                        </DockPanel>
+
+                                    </Grid>
+                                </DockPanel>
+                                <DockPanel Grid.Column="1">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="195*" />
+                                            <RowDefinition Height="60" />
+                                        </Grid.RowDefinitions>
+
+                                        <DockPanel Grid.Row="0">
+                                            <Controls:ProgressRing x:Name="progress"
+                                                                   VerticalAlignment="Stretch"
+                                                                   HorizontalAlignment="Stretch"
+                                                                   IsActive="False" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="1">
+                                            <Button x:Name="calculate"
+                                                    Content="CALCULATE"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Stretch"
+                                                    Margin="0,0,5,0"
+                                                    IsEnabled="False"
+                                                    Click="calculate_Click" />
+                                        </DockPanel>
+                                    </Grid>
+                                </DockPanel>
+                            </Grid>
+                        </DockPanel>
+                        <DockPanel Grid.Row="1">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30*" />
+                                    <RowDefinition Height="80*" />
+                                </Grid.RowDefinitions>
+
+                                <DockPanel Grid.Row="0">
+                                    <Label Margin="2,0,0,0"
+                                           x:Name="result"
+                                           Content="RESULTS:"
+                                           Visibility="Hidden"
+                                           FontSize="14" />
+                                </DockPanel>
+                                <DockPanel Grid.Row="1">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="2*" />
+                                            <RowDefinition Height="3*" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="1.2*" />
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="1.1*" />
+                                            <ColumnDefinition Width="1.2*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <DockPanel Grid.Row="0"
+                                                   Grid.Column="0">
+                                            <Label x:Name="price"
+                                                   Content="Price"
+                                                   Visibility="Hidden"
+                                                   Height="28"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="0"
+                                                   Grid.Column="1">
+                                            <Label x:Name="error"
+                                                   Content="Standard Error"
+                                                   Visibility="Hidden"
+                                                   Height="28"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="0"
+                                                   Grid.Column="2">
+                                            <Label x:Name="delta"
+                                                   Content="Delta"
+                                                   Visibility="Hidden"
+                                                   Height="28"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="0"
+                                                   Grid.Column="3">
+                                            <Label x:Name="theta"
+                                                   Content="Theta"
+                                                   Visibility="Hidden"
+                                                   Height="28"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="0"
+                                                   Grid.Column="4">
+                                            <Label x:Name="gamma"
+                                                   Content="Gamma"
+                                                   Visibility="Hidden"
+                                                   Height="28"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="0"
+                                                   Grid.Column="5">
+                                            <Label x:Name="vega"
+                                                   Content="Vega"
+                                                   Visibility="Hidden"
+                                                   Height="28"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="0"
+                                                   Grid.Column="6">
+                                            <Label x:Name="rho"
+                                                   Content="Rho"
+                                                   Height="28"
+                                                   Visibility="Hidden"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="0"
+                                                   Grid.Column="7">
+                                            <Label x:Name="timeTaken"
+                                                   Content="Time Taken"
+                                                   Visibility="Hidden"
+                                                   Height="28"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="0"
+                                                   Grid.Column="8">
+                                            <Label x:Name="processorCount"
+                                                   Content="Processor Count"
+                                                   Visibility="Hidden"
+                                                   Height="28"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="1"
+                                                   Grid.Column="0">
+                                            <Label x:Name="lPrice"
+                                                   Height="42.6666666666667"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="1"
+                                                   Grid.Column="1">
+                                            <Label x:Name="lError"
+                                                   Height="42.6666666666667"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="1"
+                                                   Grid.Column="2">
+                                            <Label x:Name="lDelta"
+                                                   Height="42.6666666666667"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="1"
+                                                   Grid.Column="3">
+                                            <Label x:Name="lTheta"
+                                                   Height="42.6666666666667"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="1"
+                                                   Grid.Column="4">
+                                            <Label x:Name="lGamma"
+                                                   Height="42.6666666666667"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="1"
+                                                   Grid.Column="5">
+                                            <Label x:Name="lVega"
+                                                   Height="42.6666666666667"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="1"
+                                                   Grid.Column="6">
+                                            <Label x:Name="lRho"
+                                                   Height="42.6666666666667"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="1"
+                                                   Grid.Column="7">
+                                            <Label x:Name="lTimeTaken"
+                                                   Height="42.6666666666667"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="1"
+                                                   Grid.Column="8">
+                                            <Label x:Name="lProcessorCount"
+                                                   Height="42.6666666666667"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                    </Grid>
+                                </DockPanel>
+
+                            </Grid>
+                        </DockPanel>
+
+                    </Grid>
+                </TabItem>
+
+                <TabItem Header="|"
+                         Controls:ControlsHelper.HeaderFontSize="18"
+                         IsEnabled="False" />
+
+                <TabItem Header="Graphs"
+                         x:Name="graphs"
+                         IsEnabled="False"
+                         Controls:ControlsHelper.HeaderFontSize="19">
+                    <Grid x:Name="graphsPlot">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="240*" />
+                            <RowDefinition Height="60*" />
+                        </Grid.RowDefinitions>
+                        <DockPanel Grid.Row="0">
+                            <oxy:PlotView Model="{Binding DataPoints}"
+                                          Margin="15,5,15,5"
+                                          Background="#FF1A1919" />
+                        </DockPanel>
+                        <DockPanel Grid.Row="1">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30*" />
+                                    <RowDefinition Height="80*" />
+                                </Grid.RowDefinitions>
+
+                                <DockPanel Grid.Row="0">
+                                    <Label Margin="2,0,0,0"
+                                           Content="RESULTS:"
+                                           FontSize="14" />
+                                </DockPanel>
+                                <DockPanel Grid.Row="1">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="2*" />
+                                            <RowDefinition Height="3*" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="1.2*" />
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="1.1*" />
+                                            <ColumnDefinition Width="1.2*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <DockPanel Grid.Row="0"
+                                                   Grid.Column="0">
+                                            <Label Content="Price"
+                                                   Height="28"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="0"
+                                                   Grid.Column="1">
+                                            <Label Content="Standard Error"
+                                                   Height="28"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="0"
+                                                   Grid.Column="2">
+                                            <Label Content="Delta"
+                                                   Height="28"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="0"
+                                                   Grid.Column="3">
+                                            <Label Content="Theta"
+                                                   Height="28"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="0"
+                                                   Grid.Column="4">
+                                            <Label Content="Gamma"
+                                                   Height="28"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="0"
+                                                   Grid.Column="5">
+                                            <Label Content="Vega"
+                                                   Height="28"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="0"
+                                                   Grid.Column="6">
+                                            <Label Content="Rho"
+                                                   Height="28"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="0"
+                                                   Grid.Column="7">
+                                            <Label Content="Time Taken"
+                                                   Height="28"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="0"
+                                                   Grid.Column="8">
+                                            <Label Content="Processor Count"
+                                                   Height="28"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="1"
+                                                   Grid.Column="0">
+                                            <Label x:Name="lPricePlot"
+                                                   Height="42.6666666666667"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="1"
+                                                   Grid.Column="1">
+                                            <Label x:Name="lErrorPlot"
+                                                   Height="42.6666666666667"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="1"
+                                                   Grid.Column="2">
+                                            <Label x:Name="lDeltaPlot"
+                                                   Height="42.6666666666667"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="1"
+                                                   Grid.Column="3">
+                                            <Label x:Name="lThetaPlot"
+                                                   Height="42.6666666666667"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="1"
+                                                   Grid.Column="4">
+                                            <Label x:Name="lGammaPlot"
+                                                   Height="42.6666666666667"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="1"
+                                                   Grid.Column="5">
+                                            <Label x:Name="lVegaPlot"
+                                                   Height="42.6666666666667"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="1"
+                                                   Grid.Column="6">
+                                            <Label x:Name="lRhoPlot"
+                                                   Height="42.6666666666667"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="1"
+                                                   Grid.Column="7">
+                                            <Label x:Name="lTimeTakenPlot"
+                                                   Height="42.6666666666667"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                        <DockPanel Grid.Row="1"
+                                                   Grid.Column="8">
+                                            <Label x:Name="lProcessorCountPlot"
+                                                   Height="42.6666666666667"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top" />
+                                        </DockPanel>
+                                    </Grid>
+                                </DockPanel>
+
+                            </Grid>
+                        </DockPanel>
+                    </Grid>
+                </TabItem>
+
+                <TabItem Header="|"
+                         Controls:ControlsHelper.HeaderFontSize="18"
+                         IsEnabled="False" />
+
+                <TabItem Header="Portfolio"
+                         Controls:ControlsHelper.HeaderFontSize="19">
+                    <Grid />
+                </TabItem>
+
+                <TabItem Header="|"
+                         Controls:ControlsHelper.HeaderFontSize="18"
+                         IsEnabled="False" />
+
+                <TabItem Header="Add/Delete Options"
+                         Controls:ControlsHelper.HeaderFontSize="19">
+                    <Grid />
+                </TabItem>
+
+            </Controls:MetroAnimatedSingleRowTabControl>
+        </DockPanel>
     </Grid>
-</Window>
+</Controls:MetroWindow>
