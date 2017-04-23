@@ -93,7 +93,7 @@ namespace PortfolioManager.Classes
 
             this.delta = (delgamma1 - delgamma2)/ (2 * delta);
 
-            this.theta = -1 * (option.calculateOptionPrice(numberOfSimulations, numberOfDays, daysToExpiry, delta, ChangeValue.TIME, controlVariateReduction: controlVariateReduction, multithreading: multithreading) - option.calculateOptionPrice(numberOfSimulations, numberOfDays, daysToExpiry, -1 * delta, ChangeValue.TIME, controlVariateReduction: controlVariateReduction, multithreading: multithreading)) / (2 * delta);
+            this.theta = -365 * (option.calculateOptionPrice(numberOfSimulations, numberOfDays, daysToExpiry, delta, ChangeValue.TIME, controlVariateReduction: controlVariateReduction, multithreading: multithreading) - option.calculateOptionPrice(numberOfSimulations, numberOfDays, daysToExpiry, -1 * delta, ChangeValue.TIME, controlVariateReduction: controlVariateReduction, multithreading: multithreading)) / (2 * delta);
 
             this.gamma = (delgamma1 + delgamma2 - 2 * option.Price) / Math.Pow(delta, 2);
 

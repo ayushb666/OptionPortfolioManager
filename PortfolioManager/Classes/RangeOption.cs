@@ -9,24 +9,28 @@ namespace PortfolioManager.Classes
     class RangeOption : Options
     {
         #region Constructors of the European option
-        public RangeOption(string symbol, ISecurity underlying, DateTime expiryDate, double historicalVolatility, OptionKind optionKind)
+        public RangeOption(string symbol, ISecurity underlying, DateTime expiryDate, Double strikePrice, double historicalVolatility, OptionType type, OptionKind optionKind)
         {
             this.symbol = symbol;
             this.underlying = underlying;
             this.expiryDate = expiryDate;
             this.historicalVolatility = historicalVolatility;
             this.optionKind = optionKind;
+            this.strikePrice = strikePrice;
+            this.type = type;
         }
 
-        public RangeOption(String issuer, Exchange[] tradedOnExchange, string symbol, ISecurity underlying, DateTime expiryDate, double historicalVolatility, String isin, Boolean isTradable, OptionKind optionKind)
+        public RangeOption(String issuer, Exchange[] tradedOnExchange, string symbol, ISecurity underlying, DateTime expiryDate, Double strikePrice, double historicalVolatility, String isin, Boolean isTradable, OptionType type ,OptionKind optionKind)
         {
             this.issuer = issuer;
             this.tradedOnExchange = tradedOnExchange;
+            this.strikePrice = strikePrice;
             this.symbol = symbol;
             this.underlying = underlying;
             this.expiryDate = expiryDate;
             this.historicalVolatility = historicalVolatility;
             this.isin = isin;
+            this.type = type;
             this.isTradable = isTradable;
             this.optionKind = optionKind;
         }
@@ -62,6 +66,7 @@ namespace PortfolioManager.Classes
         {
 
             double[] priceAtEnd = Simulator.getPath(this, numberOfSimulations, numberOfDays, del, change, controlVariateReduction, multithreading);
+            Double daysToExpirey = Convert.ToDouble((this.ExpiryDate - DateTime.Today).Days);
             Double sum = 0;
             for (int i = 0; i < priceAtEnd.Length; i++)
             {
@@ -69,8 +74,8 @@ namespace PortfolioManager.Classes
                 sum = controlVariateReduction ? (sum + priceAtEnd[i] - Simulator.controlVariateList[i]) : (sum + priceAtEnd[i]);
             }
 
-            Double optionPrice = (sum / numberOfSimulations) * Math.Exp(-Simulator.yieldCurve[0].Rate * daysToExpiry / 365.0);
-            if (change == ChangeValue.RATE) { Simulator.changeValues(this, -1 * del, change); }
+            Double optionPrice = (sum / numberOfSimulations) * Math.Exp(-Simulator.yieldCurve[0].Rate * daysToExpirey / 365.0);
+            if (change == ChangeValue.RATE || change == ChangeValue.TIME) { Simulator.changeValues(this, -1 * del, change); }
             return optionPrice;
         }
 

@@ -14,7 +14,7 @@ namespace PortfolioManager.Classes
         public PlotModel DataPoints { get; private set; }
         public GraphPlotting()
         {
-            this.DataPoints = new PlotModel { Title = "Simulated Path",
+            this.DataPoints = new PlotModel { Title = "Simulated Path (Just showing 50 paths)",
                 TextColor = OxyColors.White,
                 TitleColor = OxyColors.White,
                 PlotAreaBorderColor = OxyColors.White,

@@ -66,6 +66,7 @@ namespace PortfolioManager.Classes
         {
 
             double[] priceAtEnd = Simulator.getPath(this, numberOfSimulations, numberOfDays, del, change, controlVariateReduction, multithreading);
+            Double daysToExpirey = Convert.ToDouble((this.ExpiryDate - DateTime.Today).Days);
             Double sum = 0;
             for (int i = 0; i < priceAtEnd.Length; i++)
             {
@@ -79,8 +80,8 @@ namespace PortfolioManager.Classes
                 }
             }
 
-            Double optionPrice = (sum / numberOfSimulations) * Math.Exp(-Simulator.yieldCurve[0].Rate * daysToExpiry / 365.0);
-            if (change == ChangeValue.RATE) { Simulator.changeValues(this, -1 * del, change); }
+            Double optionPrice = (sum / numberOfSimulations) * Math.Exp(-Simulator.yieldCurve[0].Rate * daysToExpirey / 365.0);
+            if (change == ChangeValue.RATE || change == ChangeValue.TIME) { Simulator.changeValues(this, -1 * del, change); }
             return optionPrice;
         }
 

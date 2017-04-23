@@ -32,7 +32,6 @@ namespace PortfolioManager
         private OptionType type;
         private Double rate;
         private Double rebate;
-        private Double barrierforOption;
         private Int64 simulationNumber;
         private Int32 steps;
         private Boolean controlVariateEnabled;
@@ -72,7 +71,7 @@ namespace PortfolioManager
             graphPlot = new GraphPlotting();
             this.DataContext = graphPlot;
             this.graphs.IsEnabled = true;
-            if (this.simulationNumber > 500 && this.steps > 500) { this.graphs.ToolTip = "Graph too complex. May take time to load "; }
+            if (this.simulationNumber > 500 && this.steps > 500) { this.graphs.ToolTip = "Graph may take time to load "; }
             else { this.graphs.ToolTip = ""; }
             ISecurity underlying = new Stock(this.underlyingPrice);
             Options option = null;
@@ -82,7 +81,7 @@ namespace PortfolioManager
                     option = new AsianOption(underlying.Symbol, underlying, this.maturityDate, this.strike, this.vol, this.type, this.kind);
                     break;
                 case OptionKind.BARRIER:
-                    option = new BarrierOption(underlying.Symbol, underlying, this.maturityDate, this.strike, this.vol, this.type, this.kind, this.barrierforOption, this.barrierOptiont);
+                    option = new BarrierOption(underlying.Symbol, underlying, this.maturityDate, this.strike, this.vol, this.type, this.kind, this.rebate, this.barrierOptiont);
                     break;
                 case OptionKind.DIGITAL:
                     option = new DigitalOption(underlying.Symbol, underlying, this.maturityDate, this.strike, this.vol, this.type, this.kind, this.rebate);
@@ -94,7 +93,7 @@ namespace PortfolioManager
                     option = new LookbackOption(underlying.Symbol, underlying, this.maturityDate, this.strike, this.vol, this.type, this.kind);
                     break;
                 case OptionKind.RANGE:
-                    option = new RangeOption(underlying.Symbol, underlying, this.maturityDate, this.vol, this.kind);
+                    option = new RangeOption(underlying.Symbol, underlying, this.maturityDate, this.strike, this.vol, this.type, this.kind);
                     break;
                 default:
                     option = new EuropeanOption(underlying.Symbol, underlying, this.maturityDate, this.strike, this.vol, this.type, this.kind);
@@ -337,7 +336,7 @@ namespace PortfolioManager
 
         private void tbRebate_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!Double.TryParse(this.tbRebate.Text, out this.rebate) && !Double.TryParse(this.tbRebate.Text, out this.barrierforOption))
+           if (!Double.TryParse(this.tbRebate.Text, out this.rebate))
             {
                 tbRebate.BorderBrush = Brushes.Red;
                 this.checker9 = false;
@@ -429,9 +428,6 @@ namespace PortfolioManager
                 case "range":
                     this.extra.Visibility = Visibility.Hidden;
                     this.dpBarrierOptionType.Visibility = Visibility.Hidden;
-                    this.tbStrikePrice.IsEnabled = false;
-                    this.put.IsEnabled = false;
-                    this.call.IsEnabled = false;
                     this.checker9 = true;
                     this.kind = OptionKind.RANGE;
                     break;
@@ -442,7 +438,7 @@ namespace PortfolioManager
 
         private void barrierOptionType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            String barrierOptionTyp = ((ComboBoxItem)this.optionKinds.SelectedValue).Name;
+            String barrierOptionTyp = ((ComboBoxItem)this.barrierOptionType.SelectedValue).Name;
             switch (barrierOptionTyp)
             {
                 case "downout":

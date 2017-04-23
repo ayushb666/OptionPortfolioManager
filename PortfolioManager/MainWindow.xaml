@@ -32,7 +32,7 @@
                 <DockPanel Grid.Column="0">
                     <TextBlock x:Name="tbDashboard"
                        Height="auto"
-                       Text="STARK CAPITAL"
+                       Text="AXE CAPITAL"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Stretch"
                        DockPanel.Dock="Right"
@@ -177,7 +177,7 @@
                                                                    Grid.Column="0">
                                                             <Label x:Name="numberOfScenarios"
                                                                    Margin="10,0,0,0"
-                                                                   Content="Number of Scenarios: "
+                                                                   Content="Number of Steps: "
                                                                    Height="50.6666666666667"
                                                                    VerticalAlignment="Top" />
                                                         </DockPanel>
@@ -815,7 +815,14 @@
 
                 <TabItem Header="Portfolio"
                          Controls:ControlsHelper.HeaderFontSize="19">
-                    <Grid />
+                    <Grid>
+                        <DataGrid x:Name="dataGrid"
+                                  HorizontalAlignment="Stretch"
+                                  Margin="5,5,5,5"
+                                  VerticalAlignment="Stretch"
+                                  AutoGenerateColumns="True"
+                                  Style="{StaticResource AzureDataGrid}" />
+                    </Grid>
                 </TabItem>
 
                 <TabItem Header="|"

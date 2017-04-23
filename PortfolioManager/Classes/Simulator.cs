@@ -68,7 +68,7 @@ namespace PortfolioManager.Classes
                    }
                    lock (lck)
                    {
-                       if(plot != null) { plot.addNewSeries(simulatedPathForOneSimulation); }
+                       if (plot != null && day<=50) { plot.addNewSeries(simulatedPathForOneSimulation); }
                        switch (option.OptionKind)
                        {
                            case OptionKind.ASIAN:
@@ -78,7 +78,7 @@ namespace PortfolioManager.Classes
                                switch (((BarrierOption)option).BarrierOptionType)
                                {
                                    case BarrierOptionType.UPOUT:
-                                       if (simulatedPathForOneSimulation.Max() > ((BarrierOption)option).Barrier){ priceAtEnd[day++] = -1; }
+                                       if (simulatedPathForOneSimulation.Max() > ((BarrierOption)option).Barrier) { priceAtEnd[day++] = -1; }
                                        else { priceAtEnd[day++] = simulatedPathForOneSimulation[simulatedPathForOneSimulation.Length - 1]; }
                                        break;
                                    case BarrierOptionType.UPIN:
@@ -104,7 +104,17 @@ namespace PortfolioManager.Classes
                                priceAtEnd[day++] = simulatedPathForOneSimulation[simulatedPathForOneSimulation.Length - 1];
                                break;
                            case OptionKind.LOOKBACK:
-                               priceAtEnd[day++] = simulatedPathForOneSimulation.Max();
+                               switch (option.Type)
+                               {
+                                   case OptionType.CALL:
+                                       priceAtEnd[day++] = simulatedPathForOneSimulation.Max();
+                                       break;
+                                   case OptionType.PUT:
+                                       priceAtEnd[day++] = simulatedPathForOneSimulation.Min();
+                                       break;
+                                   default:
+                                       break;
+                               }
                                break;
                            case OptionKind.RANGE:
                                priceAtEnd[day++] = simulatedPathForOneSimulation.Max() - simulatedPathForOneSimulation.Min();
@@ -117,7 +127,7 @@ namespace PortfolioManager.Classes
                    }
                });
 
-            if (change != ChangeValue.RATE) { changeValues(option, -1 * del, change); }
+            if (change != ChangeValue.RATE && change != ChangeValue.TIME) { changeValues(option, -1 * del, change); }
             return priceAtEnd;
         }
         #endregion
@@ -153,19 +163,22 @@ namespace PortfolioManager.Classes
         #region Create and Save Random Numbers
         public static void createRandomNumbers(Options option, long noOfSimulations, int numberOfDays, Boolean antitheticReduction)
         {
-            Random randomgGenerator = new Random();
             noOfSimulations = antitheticReduction ? noOfSimulations / 2 : noOfSimulations;
-            for (int i = 0; i < noOfSimulations; i++)
-            {
-                double[] rn = RandomNumberGenerator.polarRejection(randomgGenerator, numberOfDays);
-                randomNumbers.Add(rn);
-                if (antitheticReduction)
-                {
-                    double[] rnnew = new Double[rn.Length];
-                    for (int j = 0; j < rn.Length; j++) { rnnew[j] = -1 * rn[j]; }
-                    randomNumbers.Add(rnnew);
-                }
-            }
+            Parallel.For(0, noOfSimulations, new ParallelOptions { MaxDegreeOfParallelism = Environment.ProcessorCount }, i =>
+              {
+                  double[] rn = RandomNumberGenerator.polarRejection(new Random((int)(i + DateTime.Now.Millisecond) + Environment.TickCount), numberOfDays);
+                  double[] rnnew = null;
+                  if (antitheticReduction)
+                  {
+                      rnnew = new Double[rn.Length];
+                      for (int j = 0; j < rn.Length; j++) { rnnew[j] = -1 * rn[j]; }
+                  }
+                  lock (lck)
+                  {
+                      randomNumbers.Add(rn);
+                      if (antitheticReduction) { randomNumbers.Add(rnnew); }
+                  }
+              });
         }
 
         #endregion
