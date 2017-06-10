@@ -20,7 +20,6 @@ namespace PortfolioManager.Classes
     {
         #region Variable Name
         protected String issuer;
-        protected Exchange[] tradedOnExchange;
         protected Double price = -1;
         protected String symbol;
         protected ISecurity underlying;
@@ -49,17 +48,6 @@ namespace PortfolioManager.Classes
 
         }
 
-        public Exchange[] TradedOnExchange
-        {
-            get
-            {
-                return tradedOnExchange;
-            }
-            set
-            {
-                this.tradedOnExchange = value;
-            }
-        }
 
         public string Symbol
         {

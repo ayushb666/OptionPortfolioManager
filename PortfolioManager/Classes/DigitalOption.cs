@@ -37,10 +37,9 @@ namespace PortfolioManager.Classes
             this.rebate = rebate;
         }
 
-        public DigitalOption(String issuer, Exchange[] tradedOnExchange, string symbol, ISecurity underlying, DateTime expiryDate, double strikePrice, double historicalVolatility, String isin, Boolean isTradable, OptionType type, OptionKind optionKind, Double rebate)
+        public DigitalOption(String issuer, string symbol, ISecurity underlying, DateTime expiryDate, double strikePrice, double historicalVolatility, String isin, Boolean isTradable, OptionType type, OptionKind optionKind, Double rebate)
         {
             this.issuer = issuer;
-            this.tradedOnExchange = tradedOnExchange;
             this.symbol = symbol;
             this.underlying = underlying;
             this.expiryDate = expiryDate;
@@ -59,7 +58,7 @@ namespace PortfolioManager.Classes
         // This function is a kind of a dummy finction that uses other 2 function calculate standarddevation and calculate option price to calculate value of greek and option price.
         public override void calulateOptionPriceAndGreeks(long numberOfSimulations, Double interstRate, int numberOfDays, bool antitheticReduction, bool controlVariateReduction, bool multithreading, Double del = 0, ChangeValue change = ChangeValue.NONE, MainWindow form = null, GraphPlotting plot = null)
         {
-            Simulator.initializeYieldCurve(interestRate: interstRate);
+            Simulator.initializeYieldCurve();
             Simulator.createRandomNumbers(this, numberOfSimulations, numberOfDays, antitheticReduction);
             Double daysToExpiry = Convert.ToDouble((this.ExpiryDate - DateTime.Today).Days);
             Double[] priceAtEnd = Simulator.getPath(this, numberOfSimulations, numberOfDays, del, change, controlVariateReduction, multithreading, plot: plot);

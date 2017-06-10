@@ -86,7 +86,7 @@ namespace PortfolioManager.Classes
 
         // This function is used to caculate greeks. It takes as an input an option and then make use of calculate option price present in option class to calulate value of greeks
         #region Function to calculate greeks
-        public void calculateGreeks(long numberOfSimulations, int numberOfDays, Double daysToExpiry,Options option, Double delta = 2, Boolean controlVariateReduction = false, Boolean multithreading = false, MainWindow form = null)
+        public void calculateGreeks(long numberOfSimulations, int numberOfDays, Double daysToExpiry,Options option, Double delta = 1, Boolean controlVariateReduction = false, Boolean multithreading = false, MainWindow form = null)
         {
             Double delgamma1 = option.calculateOptionPrice(numberOfSimulations, numberOfDays, daysToExpiry, delta, ChangeValue.UPRICE, controlVariateReduction: controlVariateReduction, multithreading: multithreading);
             Double delgamma2 = option.calculateOptionPrice(numberOfSimulations, numberOfDays, daysToExpiry, -1 * delta, ChangeValue.UPRICE, controlVariateReduction: controlVariateReduction, multithreading: multithreading);

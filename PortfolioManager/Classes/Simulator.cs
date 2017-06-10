@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Linq;
+using PortfolioManager.Model;
 using System.Threading.Tasks;
 using System.Threading;
 
@@ -14,19 +15,24 @@ namespace PortfolioManager.Classes
     static class Simulator
     {
         public static List<Double> controlVariateList = new List<Double>();
-        public static List<InterestRate> yieldCurve = new List<InterestRate>();
+        public static List<InterestRateDB> yieldCurve = new List<InterestRateDB>();
         public static List<Double[]> randomNumbers = new List<Double[]>();
+        private static DataModelContainer model = new DataModelContainer();
         private static readonly Object lck = new Object();
 
 
         // This function initializes yield curve. Currently it is not of much use and would make changes.
         #region Make Yield Curve
-        public static void initializeYieldCurve(Double interestRate = 0.05)
+        public static void initializeYieldCurve()
         {
             yieldCurve.Clear();
-            for (int i = 0; i < 10; i++)
+            try
             {
-                yieldCurve.Add(new InterestRate(DateTime.Today.AddYears(i), interestRate));
+                yieldCurve = model.InterestRateDBs.ToList();
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
         #endregion
@@ -68,7 +74,7 @@ namespace PortfolioManager.Classes
                    }
                    lock (lck)
                    {
-                       if (plot != null && day<=50) { plot.addNewSeries(simulatedPathForOneSimulation); }
+                       if (plot != null && day<=0) { plot.addNewSeries(simulatedPathForOneSimulation); }
                        switch (option.OptionKind)
                        {
                            case OptionKind.ASIAN:

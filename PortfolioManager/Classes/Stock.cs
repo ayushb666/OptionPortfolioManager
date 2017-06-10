@@ -10,7 +10,6 @@ namespace PortfolioManager.Classes
     {
         #region Variables
         private string issuer;
-        private Exchange[] tradedOnExchange;
         private String isin;
         private Double price;
         private String symbol;
@@ -25,10 +24,9 @@ namespace PortfolioManager.Classes
             this.symbol = symbol;
         }
 
-        public Stock(String issuer, Exchange[] tradedOnExchange, String isin, Double price, String symbol, Boolean isTradable)
+        public Stock(String issuer, String isin, Double price, String symbol, Boolean isTradable)
         {
             this.issuer = issuer;
-            this.tradedOnExchange = tradedOnExchange;
             this.isin = isin;
             this.price = price;
             this.symbol = symbol;
@@ -85,19 +83,6 @@ namespace PortfolioManager.Classes
             set
             {
                 this.symbol = value;
-            }
-
-        }
-
-        public Exchange[] TradedOnExchange
-        {
-            get
-            {
-                return tradedOnExchange;
-            }
-            set
-            {
-                this.tradedOnExchange = value;
             }
 
         }

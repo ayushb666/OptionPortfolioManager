@@ -31,15 +31,15 @@
 
                 <DockPanel Grid.Column="0">
                     <TextBlock x:Name="tbDashboard"
-                       Height="auto"
-                       Text="AXE CAPITAL"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Stretch"
-                       DockPanel.Dock="Right"
-                       Margin="5,0,2,0"
-                       Width="auto"
-                       FontSize="18"
-                       FontWeight="Bold"/>
+                               Height="auto"
+                               Text="AXE CAPITAL"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Stretch"
+                               DockPanel.Dock="Right"
+                               Margin="5,0,2,0"
+                               Width="auto"
+                               FontSize="18"
+                               FontWeight="Bold" />
                 </DockPanel>
                 <DockPanel Grid.Column="2">
                     <Label Height="auto"
@@ -63,7 +63,243 @@
                    Margin="0,41,0.333,-0.333"
                    VerticalAlignment="Stretch">
             <Controls:MetroAnimatedSingleRowTabControl x:Name="tabbedControls">
-                <!--Price Calculator Code Starts from her-->
+
+                <TabItem Header="Portfolio"
+                         Controls:ControlsHelper.HeaderFontSize="19">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="95*" />
+                            <RowDefinition Height="5*" />
+                            <RowDefinition Height="27*" />
+                            <RowDefinition Height="5*" />
+                            <RowDefinition Height="385*" />
+                        </Grid.RowDefinitions>
+                        <DockPanel Grid.Row="0"
+                                   Margin="0,0,0.333,4.667"
+                                   Grid.RowSpan="2">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="3*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*" />
+                                </Grid.ColumnDefinitions>
+
+                                <DockPanel Grid.Row="1"
+                                           Grid.Column="0">
+                                    <Label x:Name="lProfitnLoss"
+                                           Content="Total Profit and Loss"
+                                           Height="28"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Top" />
+                                </DockPanel>
+                                <DockPanel Grid.Row="1"
+                                           Grid.Column="1">
+                                    <Label x:Name="lTotaldelta"
+                                           Content="Total Delta"
+                                           Height="28"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Top" />
+                                </DockPanel>
+                                <DockPanel Grid.Row="1"
+                                           Grid.Column="2">
+                                    <Label x:Name="lTotalTheta"
+                                           Content="Total Theta"
+                                           Height="28"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Top" />
+                                </DockPanel>
+                                <DockPanel Grid.Row="1"
+                                           Grid.Column="3">
+                                    <Label x:Name="lTotalGamma"
+                                           Content="Total Gamma"
+                                           Height="28"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Top" />
+                                </DockPanel>
+                                <DockPanel Grid.Row="1"
+                                           Grid.Column="4">
+                                    <Label x:Name="lTotalVega"
+                                           Content="Total Vega"
+                                           Height="28"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Top" />
+                                </DockPanel>
+                                <DockPanel Grid.Row="1"
+                                           Grid.Column="5">
+                                    <Label x:Name="lTotalRho"
+                                           Content="Total Rho"
+                                           Height="28"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Top" />
+                                </DockPanel>
+
+                                <DockPanel Grid.Row="2"
+                                           Grid.Column="0">
+                                    <Label x:Name="lvProfitnLoss"
+                                           Height="28"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Top" />
+                                </DockPanel>
+                                <DockPanel Grid.Row="2"
+                                           Grid.Column="1">
+                                    <Label x:Name="lvTotaldelta"
+                                           Height="28"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Top" />
+                                </DockPanel>
+                                <DockPanel Grid.Row="2"
+                                           Grid.Column="2">
+                                    <Label x:Name="lvTotalTheta"
+                                           Height="28"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Top" />
+                                </DockPanel>
+                                <DockPanel Grid.Row="2"
+                                           Grid.Column="3">
+                                    <Label x:Name="lvTotalGamma"
+                                           Height="28"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Top" />
+                                </DockPanel>
+                                <DockPanel Grid.Row="2"
+                                           Grid.Column="4">
+                                    <Label x:Name="lvTotalVega"
+                                           Height="28"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Top" />
+                                </DockPanel>
+                                <DockPanel Grid.Row="2"
+                                           Grid.Column="5">
+                                    <Label x:Name="lvTotalRho"
+                                           Height="28"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Top" />
+                                </DockPanel>
+                            </Grid>
+
+                        </DockPanel>
+                        <DockPanel Grid.Row="2">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="4*" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*" />
+                                </Grid.ColumnDefinitions>
+                                <DockPanel Grid.Column="0">
+                                    <Button x:Name="bRefresh"
+                                            Content="Refresh"
+                                            HorizontalAlignment="Stretch"
+                                            Margin="5,0,5,0"
+                                            Height="26"
+                                            VerticalAlignment="Bottom"
+                                            Click="bRefresh_Click" />
+                                </DockPanel>
+                                <DockPanel Grid.Column="1">
+                                    <Button x:Name="bPriceOptionBook"
+                                            Content="Price"
+                                            HorizontalAlignment="Stretch"
+                                            Margin="5,0,5,0"
+                                            Height="26"
+                                            VerticalAlignment="Bottom"
+                                            Click="bPriceOptionBook_Click" />
+                                </DockPanel>
+                                <DockPanel Grid.Column="3">
+                                    <Button x:Name="bTrade"
+                                            Content="Trade"
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Stretch"
+                                            Margin="0,0,5,0"
+                                            Click="bTrade_Click" />
+                                </DockPanel>
+                                <DockPanel Grid.Column="4">
+                                    <Button x:Name="bAddRate"
+                                            Content="Add Rate"
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Stretch"
+                                            Margin="0,0,5,0"
+                                            Click="bAddRate_Click" />
+                                </DockPanel>
+                                <DockPanel Grid.Column="5">
+                                    <Button x:Name="bAddNewStock"
+                                            Content="A/D Stock"
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Stretch"
+                                            Margin="0,0,5,0"
+                                            Click="bAddNewStock_Click" />
+                                </DockPanel>
+                                <DockPanel Grid.Column="6">
+                                    <Button x:Name="bAddNewOption"
+                                            Content="A/D Option"
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Stretch"
+                                            Margin="0,0,5,0"
+                                            Click="bAddNewOption_Click" />
+                                </DockPanel>
+                            </Grid>
+                        </DockPanel>
+                        <DockPanel Grid.Row="4"
+                                   Margin="0,0,0.333,-0.334">
+                            <DataGrid x:Name="dataGrid"
+                                      HorizontalAlignment="Stretch"
+                                      Margin="5,5,5,5"
+                                      VerticalAlignment="Stretch"
+                                      AutoGenerateColumns="False"
+                                      CanUserAddRows="false"
+                                      ItemsSource="{Binding}"
+                                      Style="{StaticResource AzureDataGrid}"
+                                      SelectionChanged="dataGrid_SelectionChanged">
+
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Id"
+                                                        Binding="{Binding Id}" />
+                                    <DataGridTextColumn Header="TimeStamp"
+                                                        Binding="{Binding TimeStamp}" />
+                                    <DataGridTextColumn x:Name="dgSymbol"
+                                                        Header="Symbol"
+                                                        Binding="{Binding InstrumentsDB.Symbol}" />
+                                    <DataGridTextColumn Header="Position"
+                                                        Binding="{Binding Position}" />
+                                    <DataGridTextColumn Header="Price"
+                                                        Binding="{Binding Price}" />
+                                    <DataGridTextColumn Header="Quantity"
+                                                        Binding="{Binding Quantity}" />
+                                    <DataGridTextColumn Header="Fair Price"
+                                                        Binding="{Binding FairPrice}" />
+                                    <DataGridTextColumn Header="Profit and Loss"
+                                                        Binding="{Binding ProfitLoss}" />
+                                    <DataGridTextColumn Header="Delta"
+                                                        Binding="{Binding Delta}" />
+                                    <DataGridTextColumn Header="Theta"
+                                                        Binding="{Binding Theta}" />
+                                    <DataGridTextColumn Header="Gamma"
+                                                        Binding="{Binding Gamma}" />
+                                    <DataGridTextColumn Header="Vega"
+                                                        Binding="{Binding Vega}" />
+                                    <DataGridTextColumn Header="Rho"
+                                                        Binding="{Binding Rho}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DockPanel>
+
+                    </Grid>
+                </TabItem>
+
+                <TabItem Header="|"
+                         Controls:ControlsHelper.HeaderFontSize="18"
+                         IsEnabled="False" />
+
                 <TabItem Header="Price Calulator"
                          Controls:ControlsHelper.HeaderFontSize="19">
                     <Grid Margin="0,15,0,0">
@@ -633,7 +869,7 @@
 
                 <TabItem Header="Graphs"
                          x:Name="graphs"
-                         IsEnabled="False"
+                         IsEnabled="True"
                          Controls:ControlsHelper.HeaderFontSize="19">
                     <Grid x:Name="graphsPlot">
                         <Grid.RowDefinitions>
@@ -809,32 +1045,8 @@
                     </Grid>
                 </TabItem>
 
-                <TabItem Header="|"
-                         Controls:ControlsHelper.HeaderFontSize="18"
-                         IsEnabled="False" />
-
-                <TabItem Header="Portfolio"
-                         Controls:ControlsHelper.HeaderFontSize="19">
-                    <Grid>
-                        <DataGrid x:Name="dataGrid"
-                                  HorizontalAlignment="Stretch"
-                                  Margin="5,5,5,5"
-                                  VerticalAlignment="Stretch"
-                                  AutoGenerateColumns="True"
-                                  Style="{StaticResource AzureDataGrid}" />
-                    </Grid>
-                </TabItem>
-
-                <TabItem Header="|"
-                         Controls:ControlsHelper.HeaderFontSize="18"
-                         IsEnabled="False" />
-
-                <TabItem Header="Add/Delete Options"
-                         Controls:ControlsHelper.HeaderFontSize="19">
-                    <Grid />
-                </TabItem>
-
             </Controls:MetroAnimatedSingleRowTabControl>
         </DockPanel>
     </Grid>
 </Controls:MetroWindow>
+

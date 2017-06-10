@@ -1,0 +1,151 @@
+﻿<Controls:MetroWindow x:Class="PortfolioManager.TradeWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:local="clr-namespace:PortfolioManager"
+                      mc:Ignorable="d"
+                      Title="TradeWindow"
+                      Height="250"
+                      Width="350"
+                      BorderThickness="0"
+                      GlowBrush="Black"
+                      WindowStartupLocation="CenterScreen"
+                      ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1.1*" />
+            <RowDefinition Height="0.5*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1.5*" />
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.Column="0"
+                   Grid.Row="1">
+            <Label x:Name="lInstrumentType"
+                   Content="Instrument Type"
+                   Height="auto"
+                   Width="auto"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Stretch"
+                   Margin="5,0,2,0" />
+
+        </DockPanel>
+        <DockPanel Grid.Column="0"
+                   Grid.Row="2">
+            <Label x:Name="lInstrument"
+                   Content="Instrument"
+                   Height="auto"
+                   Width="auto"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Stretch"
+                   Margin="5,0,2,0" />
+
+        </DockPanel>
+        <DockPanel Grid.Column="0"
+                   Grid.Row="3">
+            <Label x:Name="LPrice"
+                   Content="Price (in $)"
+                   Height="auto"
+                   Width="auto"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Stretch"
+                   Margin="5,0,2,0" />
+        </DockPanel>
+        <DockPanel Grid.Column="0"
+                   Grid.Row="4">
+            <Label x:Name="lQuantity"
+                   Content="Quantity"
+                   Height="auto"
+                   Width="auto"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Stretch"
+                   Margin="5,0,2,0" />
+
+        </DockPanel>
+
+        <DockPanel Grid.Column="1"
+                   Grid.Row="1">
+            <ComboBox x:Name="cbInstrumentType"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Center"
+                      Margin="15,0,15,0"
+                      ItemsSource="{Binding}"
+                      DisplayMemberPath="TypeName"
+                      SelectedValuePath="Id"
+                      SelectionChanged="cbInstrumentType_SelectionChanged" />
+
+        </DockPanel>
+
+        <DockPanel Grid.Column="1"
+                   Grid.Row="2">
+            <ComboBox x:Name="cbInstrument"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Center"
+                      Margin="15,0,15,0"
+                      ItemsSource="{Binding}"
+                      DisplayMemberPath="Symbol"
+                      SelectedValuePath="Id" />
+        </DockPanel>
+
+        <DockPanel Grid.Column="1"
+                   Grid.Row="3">
+            <TextBox x:Name="tbPrice"
+                     Margin="15,0,15,0"
+                     Controls:TextBoxHelper.ClearTextButton="True"
+                     Height="auto"
+                     TextWrapping="Wrap"
+                     VerticalAlignment="Center"
+                     Width="auto"
+                     TextChanged="tbPrice_TextChanged" />
+        </DockPanel>
+
+        <DockPanel Grid.Column="1"
+                   Grid.Row="4">
+            <TextBox x:Name="tbQuantity"
+                     Margin="15,0,15,0"
+                     Controls:TextBoxHelper.ClearTextButton="True"
+                     Height="auto"
+                     TextWrapping="Wrap"
+                     VerticalAlignment="Center"
+                     Width="auto"
+                     TextChanged="tbQuantity_TextChanged" />
+        </DockPanel>
+
+        <DockPanel Grid.Row="5"
+                   Grid.Column="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <DockPanel Grid.Column="1">
+                    <Button x:Name="bBuy"
+                            Content="BUY"
+                            HorizontalAlignment="Stretch"
+                            IsEnabled="False"
+                            VerticalAlignment="Stretch"
+                            Margin="2,3,15,5"
+                            Click="bBuy_Click" />
+                </DockPanel>
+                <DockPanel Grid.Column="2">
+                    <Button x:Name="bSell"
+                            Content="SELL"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            IsEnabled="False"
+                            Margin="2,3,15,5"
+                            Click="bSell_Click" />
+                </DockPanel>
+            </Grid>
+        </DockPanel>
+    </Grid>
+</Controls:MetroWindow>

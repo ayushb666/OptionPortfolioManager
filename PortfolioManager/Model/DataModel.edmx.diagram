@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2a6f8bcd0df84522a989f8cbd6d6e884" Name="Diagram1" ZoomLevel="86" >
+        <EntityTypeShape EntityType="DataModel.SecurityTypeDB" Width="1.5" PointX="5.75" PointY="5.375" />
+        <EntityTypeShape EntityType="DataModel.InstrumentsDB" Width="1.5" PointX="8" PointY="5.125" />
+        <EntityTypeShape EntityType="DataModel.OrderBookDB" Width="1.5" PointX="10.25" PointY="5" />
+        <EntityTypeShape EntityType="DataModel.OptionKindDB" Width="1.5" PointX="5.25" PointY="2.25" />
+        <EntityTypeShape EntityType="DataModel.OptionsDB" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="DataModel.StockDB" Width="1.5" PointX="0.75" PointY="1.75" />
+        <EntityTypeShape EntityType="DataModel.InterestRateDB" Width="1.5" PointX="0.75" PointY="6.75" />
+        <AssociationConnector Association="DataModel.SecurityTypeDBInstrumentsDB" />
+        <AssociationConnector Association="DataModel.InstrumentsDBOrderBookDB" />
+        <AssociationConnector Association="DataModel.StockDBOptionsDB" />
+        <AssociationConnector Association="DataModel.OptionsDBOptionKindDB" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

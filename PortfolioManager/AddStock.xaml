@@ -1,0 +1,234 @@
+﻿<Controls:MetroWindow x:Class="PortfolioManager.AddStock"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:local="clr-namespace:PortfolioManager"
+                      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      mc:Ignorable="d"
+                      Title="AddStock"
+                      Height="270"
+                      Width="350"
+                      BorderThickness="0"
+                      GlowBrush="Black"
+                      WindowStartupLocation="CenterScreen"
+                      ResizeMode="NoResize">
+
+    <Grid>
+        <Controls:MetroAnimatedSingleRowTabControl x:Name="tabbedControls">
+            <TabItem Header="Add"
+                     Controls:ControlsHelper.HeaderFontSize="19">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.5*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1.1*" />
+                        <RowDefinition Height="0.1*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1.5*" />
+                    </Grid.ColumnDefinitions>
+                    <DockPanel Grid.Column="0"
+                               Grid.Row="1">
+                        <Label x:Name="lIsin"
+                               Content="ISIN"
+                               Height="auto"
+                               Width="auto"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Stretch"
+                               Margin="5,0,2,0" />
+
+                    </DockPanel>
+                    <DockPanel Grid.Column="0"
+                               Grid.Row="2">
+                        <Label x:Name="lIssuer"
+                               Content="Issuer"
+                               Height="auto"
+                               Width="auto"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Stretch"
+                               Margin="5,0,2,0" />
+
+                    </DockPanel>
+                    <DockPanel Grid.Column="0"
+                               Grid.Row="3">
+                        <Label x:Name="lSymbol"
+                               Content="Symbol"
+                               Height="auto"
+                               Width="auto"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Stretch"
+                               Margin="5,0,2,0" />
+                    </DockPanel>
+                    <DockPanel Grid.Column="0"
+                               Grid.Row="4">
+                        <Label x:Name="lLastTradedPrice"
+                               Content="Last Traded Price"
+                               Height="auto"
+                               Width="auto"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Stretch"
+                               Margin="5,0,2,0" />
+
+                    </DockPanel>
+                    <DockPanel Grid.Column="0"
+                               Grid.Row="5">
+                        <Label x:Name="lHistoricalVolatility"
+                               Content="Volatility (in %)"
+                               Height="auto"
+                               Width="auto"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Stretch"
+                               Margin="5,0,2,0" />
+                    </DockPanel>
+
+                    <DockPanel Grid.Column="1"
+                               Grid.Row="1">
+                        <TextBox x:Name="tbIsin"
+                                 Margin="15,0,15,0"
+                                 Controls:TextBoxHelper.ClearTextButton="True"
+                                 Height="auto"
+                                 TextWrapping="Wrap"
+                                 VerticalAlignment="Top"
+                                 Width="auto" />
+                    </DockPanel>
+                    <DockPanel Grid.Column="1"
+                               Grid.Row="2">
+                        <TextBox x:Name="tbIssuer"
+                                 Margin="15,0,15,0"
+                                 Controls:TextBoxHelper.ClearTextButton="True"
+                                 Height="auto"
+                                 TextWrapping="Wrap"
+                                 VerticalAlignment="Top"
+                                 Width="auto" />
+                    </DockPanel>
+                    <DockPanel Grid.Column="1"
+                               Grid.Row="3">
+                        <TextBox x:Name="tbSymbol"
+                                 Margin="15,0,15,0"
+                                 Controls:TextBoxHelper.ClearTextButton="True"
+                                 Height="auto"
+                                 TextWrapping="Wrap"
+                                 VerticalAlignment="Top"
+                                 Width="auto" />
+                    </DockPanel>
+                    <DockPanel Grid.Column="1"
+                               Grid.Row="4">
+                        <TextBox x:Name="tbLastTradedPrice"
+                                 Margin="15,0,15,0"
+                                 Controls:TextBoxHelper.ClearTextButton="True"
+                                 Height="auto"
+                                 TextWrapping="Wrap"
+                                 VerticalAlignment="Top"
+                                 Width="auto"
+                                 TextChanged="tbLastTradedPrice_TextChanged" />
+                    </DockPanel>
+                    <DockPanel Grid.Column="1"
+                               Grid.Row="5">
+                        <TextBox x:Name="tbHistoricalVolatility"
+                                 Margin="15,0,15,0"
+                                 Controls:TextBoxHelper.ClearTextButton="True"
+                                 Height="auto"
+                                 TextWrapping="Wrap"
+                                 VerticalAlignment="Top"
+                                 Width="auto"
+                                 TextChanged="tbHistoricalVolatility_TextChanged" />
+                    </DockPanel>
+                    <DockPanel Grid.Row="6"
+                               Grid.Column="1">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <DockPanel Grid.Column="1">
+                                <Button x:Name="bAdd"
+                                        Content="ADD"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center"
+                                        Margin="2,3,15,5"
+                                        IsEnabled="False"
+                                        Click="bAdd_Click" />
+                            </DockPanel>
+                            <DockPanel Grid.Column="2">
+                                <Button x:Name="bCancel"
+                                        Content="Cancel"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center"
+                                        Margin="2,3,15,5"
+                                        Click="bCancel_Click" />
+                            </DockPanel>
+                        </Grid>
+                    </DockPanel>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="|"
+                     Controls:ControlsHelper.HeaderFontSize="18"
+                     IsEnabled="False" />
+            <TabItem Header="Delete"
+                     Controls:ControlsHelper.HeaderFontSize="19">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+                    <DockPanel Grid.Row="0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1.5*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="2*" />
+                                <RowDefinition Height="1*" />
+                            </Grid.RowDefinitions>
+                            <DockPanel Grid.Column="0"
+                                       Grid.Row="1">
+                                <Label x:Name="lSYmboltoBeDeleted"
+                                       Content="Symbol"
+                                       Height="auto"
+                                       Width="auto"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Stretch"
+                                       Margin="5,0,2,0" />
+                            </DockPanel>
+                            <DockPanel Grid.Column="1"
+                                       Grid.Row="1">
+                                <ComboBox x:Name="cbSymbolToBeDeleted"
+                                          HorizontalAlignment="Stretch"
+                                          VerticalAlignment="Center"
+                                          Margin="15,0,15,0"
+                                          ItemsSource="{Binding}"
+                                          DisplayMemberPath="Symbol"
+                                          SelectedValuePath="Id"
+                                          SelectionChanged="cbSymbolToBeDeleted_SelectionChanged" />
+                            </DockPanel>
+                        </Grid>
+                    </DockPanel>
+
+                    <DockPanel Grid.Row="1">
+                        <DockPanel Grid.Column="2">
+                            <Button x:Name="bDelete"
+                                    Content="DELETE"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    Margin="2,3,2,5"
+                                    IsEnabled="False"
+                                    Click="bDelete_Click" />
+                        </DockPanel>
+                    </DockPanel>
+                </Grid>
+            </TabItem>
+        </Controls:MetroAnimatedSingleRowTabControl>
+
+    </Grid>
+
+</Controls:MetroWindow>

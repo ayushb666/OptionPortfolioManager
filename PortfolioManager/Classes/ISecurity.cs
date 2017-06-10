@@ -9,7 +9,6 @@ namespace PortfolioManager.Classes
     interface ISecurity
     {
         string Issuer { get; set; }
-        Exchange[] TradedOnExchange { get; set; }
         double Price { get; set; }
         string Symbol { get; set; }
         string Isin { get; set; }

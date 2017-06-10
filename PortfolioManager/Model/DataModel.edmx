@@ -1,0 +1,438 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="DataModelStoreContainer">
+    <EntitySet Name="SecurityTypeDBs" EntityType="DataModel.Store.SecurityTypeDBs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="InstrumentsDBs" EntityType="DataModel.Store.InstrumentsDBs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OrderBookDBs" EntityType="DataModel.Store.OrderBookDBs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OptionKindDBs" EntityType="DataModel.Store.OptionKindDBs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OptionsDBs" EntityType="DataModel.Store.OptionsDBs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StockDBs" EntityType="DataModel.Store.StockDBs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="InterestRateDBs" EntityType="DataModel.Store.InterestRateDBs" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="SecurityTypeDBInstrumentsDB" Association="DataModel.Store.SecurityTypeDBInstrumentsDB">
+      <End Role="SecurityTypeDB" EntitySet="SecurityTypeDBs" />
+      <End Role="InstrumentsDB" EntitySet="InstrumentsDBs" />
+    </AssociationSet>
+    <AssociationSet Name="InstrumentsDBOrderBookDB" Association="DataModel.Store.InstrumentsDBOrderBookDB">
+      <End Role="InstrumentsDB" EntitySet="InstrumentsDBs" />
+      <End Role="OrderBookDB" EntitySet="OrderBookDBs" />
+    </AssociationSet>
+    <AssociationSet Name="StockDBOptionsDB" Association="DataModel.Store.StockDBOptionsDB">
+      <End Role="StockDB" EntitySet="StockDBs" />
+      <End Role="OptionsDB" EntitySet="OptionsDBs" />
+    </AssociationSet>
+    <AssociationSet Name="OptionsDBOptionKindDB" Association="DataModel.Store.OptionsDBOptionKindDB">
+      <End Role="OptionsDB" EntitySet="OptionsDBs" />
+      <End Role="OptionKindDB" EntitySet="OptionKindDBs" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="SecurityTypeDBs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TypeName" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="InstrumentsDBs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Symbol" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SecurityTypeId" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderBookDBs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Position" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Quantity" Type="bigint" Nullable="false" />
+    <Property Name="TimeStamp" Type="datetime" Nullable="false" />
+    <Property Name="Price" Type="float" Nullable="false" />
+    <Property Name="InstrumentsId" Type="bigint" Nullable="false" />
+    <Property Name="FairPrice" Type="float" Nullable="true" />
+    <Property Name="ProfitLoss" Type="float" Nullable="true" />
+    <Property Name="Delta" Type="float" Nullable="true" />
+    <Property Name="Theta" Type="float" Nullable="true" />
+    <Property Name="Gamma" Type="float" Nullable="true" />
+    <Property Name="Vega" Type="float" Nullable="true" />
+    <Property Name="Rho" Type="float" Nullable="true" />
+  </EntityType>
+  <EntityType Name="OptionKindDBs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OptionKindName" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OptionsDBs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Issuer" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Symbol" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="OptionType" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsTradable" Type="bit" Nullable="false" />
+    <Property Name="LastTradedPrice" Type="float" Nullable="false" />
+    <Property Name="StrikePrice" Type="float" Nullable="true" />
+    <Property Name="MaturityDate" Type="datetime" Nullable="false" />
+    <Property Name="ISIN" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Rebate" Type="float" Nullable="true" />
+    <Property Name="Barrier" Type="float" Nullable="true" />
+    <Property Name="BarrierOptionType" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="UnderlyingID" Type="bigint" Nullable="false" />
+    <Property Name="OptionKindID" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StockDBs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Issuer" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Symbol" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastTradedPrice" Type="float" Nullable="false" />
+    <Property Name="HistoricalVolatility" Type="float" Nullable="false" />
+    <Property Name="IsTradable" Type="bit" Nullable="false" />
+    <Property Name="ISIN" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="InterestRateDBs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Tenor" Type="datetime" Nullable="false" />
+    <Property Name="Rate" Type="float" Nullable="false" />
+  </EntityType>
+  <Association Name="SecurityTypeDBInstrumentsDB">
+    <End Role="SecurityTypeDB" Type="DataModel.Store.SecurityTypeDBs" Multiplicity="1" />
+    <End Role="InstrumentsDB" Type="DataModel.Store.InstrumentsDBs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SecurityTypeDB">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="InstrumentsDB">
+        <PropertyRef Name="SecurityTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="InstrumentsDBOrderBookDB">
+    <End Role="InstrumentsDB" Type="DataModel.Store.InstrumentsDBs" Multiplicity="1" />
+    <End Role="OrderBookDB" Type="DataModel.Store.OrderBookDBs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InstrumentsDB">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderBookDB">
+        <PropertyRef Name="InstrumentsId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StockDBOptionsDB">
+    <End Role="StockDB" Type="DataModel.Store.StockDBs" Multiplicity="1" />
+    <End Role="OptionsDB" Type="DataModel.Store.OptionsDBs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StockDB">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OptionsDB">
+        <PropertyRef Name="UnderlyingID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="OptionsDBOptionKindDB">
+    <End Role="OptionsDB" Type="DataModel.Store.OptionsDBs" Multiplicity="*" />
+    <End Role="OptionKindDB" Type="DataModel.Store.OptionKindDBs" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="OptionKindDB">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OptionsDB">
+        <PropertyRef Name="OptionKindID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="DataModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="DataModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="SecurityTypeDBs" EntityType="DataModel.SecurityTypeDB" />
+          <EntitySet Name="InstrumentsDBs" EntityType="DataModel.InstrumentsDB" />
+          <EntitySet Name="OrderBookDBs" EntityType="DataModel.OrderBookDB" />
+          <EntitySet Name="OptionKindDBs" EntityType="DataModel.OptionKindDB" />
+          <EntitySet Name="OptionsDBs" EntityType="DataModel.OptionsDB" />
+          <EntitySet Name="StockDBs" EntityType="DataModel.StockDB" />
+          <EntitySet Name="InterestRateDBs" EntityType="DataModel.InterestRateDB" />
+          <AssociationSet Name="SecurityTypeDBInstrumentsDB" Association="DataModel.SecurityTypeDBInstrumentsDB">
+            <End Role="SecurityTypeDB" EntitySet="SecurityTypeDBs" />
+            <End Role="InstrumentsDB" EntitySet="InstrumentsDBs" />
+          </AssociationSet>
+          <AssociationSet Name="InstrumentsDBOrderBookDB" Association="DataModel.InstrumentsDBOrderBookDB">
+            <End Role="InstrumentsDB" EntitySet="InstrumentsDBs" />
+            <End Role="OrderBookDB" EntitySet="OrderBookDBs" />
+          </AssociationSet>
+          <AssociationSet Name="StockDBOptionsDB" Association="DataModel.StockDBOptionsDB">
+            <End Role="StockDB" EntitySet="StockDBs" />
+            <End Role="OptionsDB" EntitySet="OptionsDBs" />
+          </AssociationSet>
+          <AssociationSet Name="OptionsDBOptionKindDB" Association="DataModel.OptionsDBOptionKindDB">
+            <End Role="OptionsDB" EntitySet="OptionsDBs" />
+            <End Role="OptionKindDB" EntitySet="OptionKindDBs" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="SecurityTypeDB">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeName" Type="String" Nullable="false" MaxLength="Max" />
+          <NavigationProperty Name="InstrumentsDBs" Relationship="DataModel.SecurityTypeDBInstrumentsDB" FromRole="SecurityTypeDB" ToRole="InstrumentsDB" />
+        </EntityType>
+        <EntityType Name="InstrumentsDB">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Symbol" Type="String" Nullable="false" MaxLength="Max" />
+          <Property Name="SecurityTypeId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="SecurityTypeDB" Relationship="DataModel.SecurityTypeDBInstrumentsDB" FromRole="InstrumentsDB" ToRole="SecurityTypeDB" />
+          <NavigationProperty Name="OrderBookDBs" Relationship="DataModel.InstrumentsDBOrderBookDB" FromRole="InstrumentsDB" ToRole="OrderBookDB" />
+        </EntityType>
+        <EntityType Name="OrderBookDB">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Position" Type="String" Nullable="false" MaxLength="Max" />
+          <Property Name="Quantity" Type="Int64" Nullable="false" />
+          <Property Name="TimeStamp" Type="DateTime" Nullable="false" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <Property Name="InstrumentsId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="InstrumentsDB" Relationship="DataModel.InstrumentsDBOrderBookDB" FromRole="OrderBookDB" ToRole="InstrumentsDB" />
+          <Property Name="FairPrice" Type="Double" Nullable="true" />
+          <Property Name="ProfitLoss" Type="Double" Nullable="true" />
+          <Property Name="Delta" Type="Double" Nullable="true" />
+          <Property Name="Theta" Type="Double" Nullable="true" />
+          <Property Name="Gamma" Type="Double" Nullable="true" />
+          <Property Name="Vega" Type="Double" Nullable="true" />
+          <Property Name="Rho" Type="Double" Nullable="true" />
+        </EntityType>
+        <EntityType Name="OptionKindDB">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OptionKindName" Type="String" Nullable="false" MaxLength="Max" />
+          <NavigationProperty Name="OptionsDBs" Relationship="DataModel.OptionsDBOptionKindDB" FromRole="OptionKindDB" ToRole="OptionsDB" />
+        </EntityType>
+        <EntityType Name="OptionsDB">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Issuer" Type="String" Nullable="false" MaxLength="Max" />
+          <Property Name="Symbol" Type="String" Nullable="false" MaxLength="Max" />
+          <Property Name="OptionType" Type="String" Nullable="false" MaxLength="Max" />
+          <Property Name="IsTradable" Type="Boolean" Nullable="false" />
+          <Property Name="LastTradedPrice" Type="Double" Nullable="false" />
+          <Property Name="StrikePrice" Type="Double" Nullable="true" />
+          <Property Name="MaturityDate" Type="DateTime" Nullable="false" />
+          <Property Name="ISIN" Type="String" Nullable="false" MaxLength="Max" />
+          <Property Name="Rebate" Type="Double" Nullable="true" />
+          <Property Name="Barrier" Type="Double" Nullable="true" />
+          <Property Name="BarrierOptionType" Type="String" Nullable="true" MaxLength="Max" />
+          <Property Name="UnderlyingID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="StockDB" Relationship="DataModel.StockDBOptionsDB" FromRole="OptionsDB" ToRole="StockDB" />
+          <NavigationProperty Name="OptionKindDB" Relationship="DataModel.OptionsDBOptionKindDB" FromRole="OptionsDB" ToRole="OptionKindDB" />
+          <Property Name="OptionKindID" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StockDB">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Issuer" Type="String" Nullable="false" MaxLength="Max" />
+          <Property Name="Symbol" Type="String" Nullable="false" MaxLength="Max" />
+          <Property Name="LastTradedPrice" Type="Double" Nullable="false" />
+          <Property Name="HistoricalVolatility" Type="Double" Nullable="false" />
+          <Property Name="IsTradable" Type="Boolean" Nullable="false" />
+          <Property Name="ISIN" Type="String" Nullable="false" MaxLength="Max" />
+          <NavigationProperty Name="OptionsDBs" Relationship="DataModel.StockDBOptionsDB" FromRole="StockDB" ToRole="OptionsDB" />
+        </EntityType>
+        <EntityType Name="InterestRateDB">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tenor" Type="DateTime" Nullable="false" />
+          <Property Name="Rate" Type="Double" Nullable="false" />
+        </EntityType>
+        <Association Name="SecurityTypeDBInstrumentsDB">
+          <End Type="DataModel.SecurityTypeDB" Role="SecurityTypeDB" Multiplicity="1" />
+          <End Type="DataModel.InstrumentsDB" Role="InstrumentsDB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SecurityTypeDB">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InstrumentsDB">
+              <PropertyRef Name="SecurityTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="InstrumentsDBOrderBookDB">
+          <End Type="DataModel.InstrumentsDB" Role="InstrumentsDB" Multiplicity="1" />
+          <End Type="DataModel.OrderBookDB" Role="OrderBookDB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InstrumentsDB">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderBookDB">
+              <PropertyRef Name="InstrumentsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StockDBOptionsDB">
+          <End Type="DataModel.StockDB" Role="StockDB" Multiplicity="1" />
+          <End Type="DataModel.OptionsDB" Role="OptionsDB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockDB">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OptionsDB">
+              <PropertyRef Name="UnderlyingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OptionsDBOptionKindDB">
+          <End Type="DataModel.OptionsDB" Role="OptionsDB" Multiplicity="*" />
+          <End Type="DataModel.OptionKindDB" Role="OptionKindDB" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="OptionKindDB">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OptionsDB">
+              <PropertyRef Name="OptionKindID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DataModelStoreContainer" CdmEntityContainer="DataModelContainer">
+    <EntitySetMapping Name="SecurityTypeDBs">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.SecurityTypeDB)">
+        <MappingFragment StoreEntitySet="SecurityTypeDBs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InstrumentsDBs">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.InstrumentsDB)">
+        <MappingFragment StoreEntitySet="InstrumentsDBs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Symbol" ColumnName="Symbol" />
+          <ScalarProperty Name="SecurityTypeId" ColumnName="SecurityTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderBookDBs">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.OrderBookDB)">
+        <MappingFragment StoreEntitySet="OrderBookDBs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Position" ColumnName="Position" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="InstrumentsId" ColumnName="InstrumentsId" />
+          <ScalarProperty Name="FairPrice" ColumnName="FairPrice" />
+          <ScalarProperty Name="ProfitLoss" ColumnName="ProfitLoss" />
+          <ScalarProperty Name="Delta" ColumnName="Delta" />
+          <ScalarProperty Name="Theta" ColumnName="Theta" />
+          <ScalarProperty Name="Gamma" ColumnName="Gamma" />
+          <ScalarProperty Name="Vega" ColumnName="Vega" />
+          <ScalarProperty Name="Rho" ColumnName="Rho" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OptionKindDBs">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.OptionKindDB)">
+        <MappingFragment StoreEntitySet="OptionKindDBs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="OptionKindName" ColumnName="OptionKindName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OptionsDBs">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.OptionsDB)">
+        <MappingFragment StoreEntitySet="OptionsDBs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Issuer" ColumnName="Issuer" />
+          <ScalarProperty Name="Symbol" ColumnName="Symbol" />
+          <ScalarProperty Name="OptionType" ColumnName="OptionType" />
+          <ScalarProperty Name="IsTradable" ColumnName="IsTradable" />
+          <ScalarProperty Name="LastTradedPrice" ColumnName="LastTradedPrice" />
+          <ScalarProperty Name="StrikePrice" ColumnName="StrikePrice" />
+          <ScalarProperty Name="MaturityDate" ColumnName="MaturityDate" />
+          <ScalarProperty Name="ISIN" ColumnName="ISIN" />
+          <ScalarProperty Name="Rebate" ColumnName="Rebate" />
+          <ScalarProperty Name="Barrier" ColumnName="Barrier" />
+          <ScalarProperty Name="BarrierOptionType" ColumnName="BarrierOptionType" />
+          <ScalarProperty Name="UnderlyingID" ColumnName="UnderlyingID" />
+          <ScalarProperty Name="OptionKindID" ColumnName="OptionKindID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StockDBs">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.StockDB)">
+        <MappingFragment StoreEntitySet="StockDBs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Issuer" ColumnName="Issuer" />
+          <ScalarProperty Name="Symbol" ColumnName="Symbol" />
+          <ScalarProperty Name="LastTradedPrice" ColumnName="LastTradedPrice" />
+          <ScalarProperty Name="HistoricalVolatility" ColumnName="HistoricalVolatility" />
+          <ScalarProperty Name="IsTradable" ColumnName="IsTradable" />
+          <ScalarProperty Name="ISIN" ColumnName="ISIN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InterestRateDBs">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.InterestRateDB)">
+        <MappingFragment StoreEntitySet="InterestRateDBs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Tenor" ColumnName="Tenor" />
+          <ScalarProperty Name="Rate" ColumnName="Rate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
